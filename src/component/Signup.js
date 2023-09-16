@@ -32,7 +32,7 @@ export const Signup = (props) => {
       if (response.ok) {
         const data = await response.json();
         if (data.success) {
-          localStorage.setItem('token', data.authtoken);
+          localStorage.setItem('token', JSON.stringify(data.authtoken));
           navigate("/");
           props.showAlert("Account Created Successfully", "success");
         } else {
@@ -58,7 +58,7 @@ export const Signup = (props) => {
 
   return (
     <div className='container'>
-      <h2 className='my-2 mt-2'> Create an Account to use Continue iNoteBook</h2>
+      <h2 className='my-2 mt-2'> Create an Account to use Continue Connectify</h2>
       <form onSubmit={handleSubmit} className='my-4'>
         <div className="form-group my-2">
           <label htmlFor="exampleInputEmail1">UserName</label>

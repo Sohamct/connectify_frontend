@@ -1,13 +1,25 @@
-import React from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import React, {useEffect, useState} from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 
 export function Navbar() {
 
-    const history = useHistory();
+    const navigate = useNavigate();
+
+    const [isLogedin, setIsLogedin] = useState(false);
+
+    useEffect(() => {
+        const info = window.localStorage.getItem("token");
+        if (JSON.parse(info)) {
+            setIsLogedin(true);
+        }
+        console.log('isLogedin:', isLogedin); 
+        console.log('Token:', info);
+    }, []);
 
     const handleLogout = () => {
         localStorage.removeItem('token');
-        history.push('/')
+        setIsLogedin(false);
+        navigate('/login');
     };
 
     return (
@@ -54,10 +66,10 @@ export function Navbar() {
                             </button>
                         </form>
 
-                        { !localStorage.getItem('token') ? <form className="d-flex" role="search">
-              <Link className="btn btn-primary mx-2" to="/login" role="button">Login</Link>
-              <Link className="btn btn-primary mx-2" to="/signup" role="button">Signup</Link>
-            </form> : <button className="btn btn-primary" onClick={handleLogout}>Logout</button>} 
+                        {!localStorage.getItem("token") ? <form className="d-flex" role="search">
+                            <Link className="btn btn-primary mx-2" to="/login" role="button">Login</Link>
+                            <Link className="btn btn-primary mx-2" to="/signup" role="button">Signup</Link>
+                        </form> : <button className="btn btn-primary" onClick={handleLogout}>Logout</button>}
                     </div>
                 </div>
             </div>
