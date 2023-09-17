@@ -6,6 +6,9 @@ import { Home } from './component/Home';
 import { Alert } from './component/Alert';
 import {BrowserRouter as Router, Routes, Route} from 'react-router-dom';
 import { useState } from 'react';
+import { NewPost } from './component/NewPost';
+import { GetPost } from './component/GetPost';
+import { GetFolks } from './component/GetFolks';
 // made by har and soham
 
 function App() {
@@ -16,8 +19,10 @@ const showAlert = (message, key) => {
 
   setTimeout(() => {
     setAlert(null);
-  }, 2000)
+  }, 1500)
 }
+
+
   return (
     <>
       <Router>
@@ -28,6 +33,9 @@ const showAlert = (message, key) => {
               <Route exact path="/" element={<Home/>} />
               <Route exact path="/login" element={<Login showAlert={showAlert}/>}/>
               <Route exact path="/signup" element={<Signup showAlert={showAlert}/>}/>
+              <Route exact path="/newPost" element={<NewPost showAlert={showAlert}/>}/>
+              <Route exact path="/myPost" element={<GetPost showAlert={showAlert}/>}/>
+              <Route exact path="/Folks" element={<GetFolks showAlert={showAlert}/>}/>
             </Routes>
           </div>
         </Router>

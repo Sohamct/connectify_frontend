@@ -9,7 +9,7 @@ export function Navbar() {
 
     useEffect(() => {
         const info = window.localStorage.getItem("token");
-        if (JSON.parse(info)) {
+        if (info) {
             setIsLogedin(true);
         }
         console.log('isLogedin:', isLogedin); 
@@ -46,11 +46,21 @@ export function Navbar() {
                                 Home
                             </a>
                         </li>
-                        <li className="nav-item">
-                            <a className="nav-link" href="/">
-                                Link
+                        {localStorage.getItem("token") &&<li className="nav-item">
+                            <a className="nav-link active" href="/myPost">
+                                My Post
                             </a>
-                        </li>
+                        </li>}
+                        {localStorage.getItem("token") && <li className="nav-item">
+                            <a className="nav-link active" href="/newPost">
+                                New Post
+                            </a>
+                        </li>}
+                        {localStorage.getItem("token") && <li className="nav-item">
+                            <a className="nav-link active" href="/folks">
+                                Folks
+                            </a>
+                        </li>}
                     </ul>
 
                     <div className="ml-auto d-flex align-items-center">

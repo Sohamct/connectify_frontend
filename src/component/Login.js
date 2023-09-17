@@ -19,7 +19,7 @@ export const Login = (props) => {
           const json = await response.json();
           if(json.success){
             // save the auth token and redirect
-            localStorage.setItem('token', JSON.stringify(json.authtoken));
+            localStorage.setItem('token', json.authtoken);
             props.showAlert("Logged in Successfullly", "success");
             navigate("/");
           }else{

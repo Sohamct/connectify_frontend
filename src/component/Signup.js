@@ -32,7 +32,7 @@ export const Signup = (props) => {
       if (response.ok) {
         const data = await response.json();
         if (data.success) {
-          localStorage.setItem('token', JSON.stringify(data.authtoken));
+          localStorage.setItem('token', (data.authtoken));
           navigate("/");
           props.showAlert("Account Created Successfully", "success");
         } else {
