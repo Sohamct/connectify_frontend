@@ -14,6 +14,7 @@ export function Navbar() {
         }
         console.log('isLogedin:', isLogedin); 
         console.log('Token:', info);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     const handleLogout = () => {
@@ -25,9 +26,9 @@ export function Navbar() {
     return (
         <nav className="navbar navbar-expand-lg navbar-light bg-light">
             <div className="container-fluid">
-                <a className="navbar-brand" href="/">
-                    Navbar
-                </a>
+                <Link className="navbar-brand" to="/">
+                    Navbar </Link>
+                
                 <button
                     className="navbar-toggler"
                     type="button"
@@ -42,25 +43,30 @@ export function Navbar() {
                 <div className="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul className="navbar-nav me-auto mb-2 mb-lg-0">
                         <li className="nav-item">
-                            <a className="nav-link active" aria-current="page" href="/">
-                                Home
-                            </a>
+                            <Link className="nav-link active" aria-current="page" to="/">
+                                Home </Link>
+                            
                         </li>
                         {localStorage.getItem("token") &&<li className="nav-item">
-                            <a className="nav-link active" href="/myPost">
-                                My Post
-                            </a>
+                            <Link className="nav-link active" to="/myPost">
+                                My Post </Link>
+                            
                         </li>}
                         {localStorage.getItem("token") && <li className="nav-item">
-                            <a className="nav-link active" href="/newPost">
-                                New Post
-                            </a>
+                            <Link className="nav-link active" to="/newPost">
+                                New Post </Link>
+                            
                         </li>}
                         {localStorage.getItem("token") && <li className="nav-item">
-                            <a className="nav-link active" href="/folks">
-                                Folks
-                            </a>
+                            <Link className="nav-link active" to="/folks">
+                                Folks </Link>
+                            
                         </li>}
+                        {/* {localStorage.getItem("token") && <li className="nav-item">
+                            <Link className="nav-link active" to="/others">
+                                Others </Link>
+                            
+                        </li>} */}
                     </ul>
 
                     <div className="ml-auto d-flex align-items-center">

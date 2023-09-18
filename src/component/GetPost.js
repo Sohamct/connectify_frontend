@@ -30,6 +30,7 @@ export const GetPost = (props) => {
             console.error(error);
         }
     }
+    
 
     return (
         <div className="container">

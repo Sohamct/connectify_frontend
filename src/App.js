@@ -9,6 +9,7 @@ import { useState } from 'react';
 import { NewPost } from './component/NewPost';
 import { GetPost } from './component/GetPost';
 import { GetFolks } from './component/GetFolks';
+import { GetOthers } from './component/GetOthers';
 // made by har and soham
 
 function App() {
@@ -36,6 +37,8 @@ const showAlert = (message, key) => {
               <Route exact path="/newPost" element={<NewPost showAlert={showAlert}/>}/>
               <Route exact path="/myPost" element={<GetPost showAlert={showAlert}/>}/>
               <Route exact path="/Folks" element={<GetFolks showAlert={showAlert}/>}/>
+              {/* <Route exact path="/others" element={<GetOthers showAlert={showAlert}/>}/> */}
+              
             </Routes>
           </div>
         </Router>
