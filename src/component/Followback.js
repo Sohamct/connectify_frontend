@@ -11,7 +11,7 @@ export const Followback = (props) => {
                         <p style={{ margin: 0 }}>{data.userName}</p>
                     </div>
                     <div>
-                        <button className="btn btn-primary" onClick={() => makeFollowback(data)}>Followback</button>
+                        <button className="btn btn-info" onClick={() => makeFollowback(data)}>Followback</button>
                     </div>
                 </li>
                 

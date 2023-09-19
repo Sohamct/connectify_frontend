@@ -9,7 +9,8 @@ export const Login = (props) => {
     const handleClick = async (e) => {
         e.preventDefault(); // form stoping the page reloading.
         const host = "http://localhost:5500"
-        const response = await fetch(`${host}/api/auth/login`, {
+        try{
+          const response = await fetch(`${host}/api/auth/login`, {
             method: "POST",
             headers: {
               "Content-Type": "application/json",// 'Content-Type': 'application/x-www-form-urlencoded',
@@ -23,9 +24,13 @@ export const Login = (props) => {
             props.showAlert("Logged in Successfullly", "success");
             navigate("/");
           }else{
-            props.showAlert("Invalid credentials", "danger");
+            props.showAlert(json.error, "danger");
           }
           console.log(json);
+        }catch(err){
+          console.log()
+          props.showAlert(err, "danger")
+        }
     }
 
     const onChange = (e) => {

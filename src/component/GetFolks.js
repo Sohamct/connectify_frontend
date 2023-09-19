@@ -3,18 +3,31 @@ import { Followings } from './Followings';
 import { Others } from './Others';
 import { Requests } from './Requests';
 import axios from 'axios';
-import { FollowerFollowing } from './FollowerFollowing';
+import { Followers } from './Followers';
 import { Followback } from './Followback';
-import {PendingRequest} from './PendingRequest';
+import { PendingRequest } from './PendingRequest';
 
 export const GetFolks = (props) => {
 
-  const [followersFollowings, setFollowersFollowings] = useState([]);
   const [followings, setFollowings] = useState([]);
   const [followback, setFollowback] = useState([]);
   const [requests, setRequest] = useState([]);
   const [others, setOthers] = useState();
   const [pendingRequest, setPendingRequest] = useState([]);
+  const [followerRequested, setFollowerRequested] = useState([]);
+  const [followersFollowings, setFollowersFollowings] = useState([]);
+  const [onlyFollowers, setOnlyFollowers] = useState([]);
+
+  useEffect(() => {
+    getFollowings();
+    getOthers();
+    getRequests();
+    getFollowback();
+    getPendingRequest();
+    getFollowers();
+    // eslint-disable-next-line
+  }, [])
+
 
   const getOthers = async () => {
     try {
@@ -34,31 +47,6 @@ export const GetFolks = (props) => {
     }
   }
 
-  useEffect(() => {
-    getFollowersFollowings();
-    getFollowings();
-    getOthers();
-    getRequests();
-    getFollowback();
-    getPendingRequest();
-    // eslint-disable-next-line
-  }, [])
-
-  const getFollowersFollowings = async () => {
-    try {
-      const host = "http://localhost:5500";
-      const res = await axios.post(`${host}/api/folk/getFollowersFollowing`, null, {
-        headers: {
-          'auth-token': localStorage.getItem('token')
-        }
-      });
-      console.log(res.data.result);
-      setFollowersFollowings(res.data.result);
-    } catch (error) {
-      console.error(error);
-    }
-  }
-
   const getFollowings = async () => {
     try {
       const host = "http://localhost:5500";
@@ -69,6 +57,24 @@ export const GetFolks = (props) => {
       });
       console.log(res.data.followingsUsers);
       setFollowings(res.data.followingsUsers);
+    } catch (error) {
+      console.error(error);
+    }
+  }
+  const getFollowers = async () => {
+    try {
+      const host = "http://localhost:5500";
+      const res = await axios.post(`${host}/api/folk/getFollowers`, null, {
+        headers: {
+          'auth-token': localStorage.getItem('token')
+        }
+      });
+      console.log(res.data.commonRequestedUsers);
+      console.log(res.data.commonUsers);
+      console.log(res.data.onlyFollowers);
+      setFollowerRequested(res.data.commonRequestedUsers)
+      setFollowersFollowings(res.data.commonUsers)
+      setOnlyFollowers(res.data.onlyFollowers);
     } catch (error) {
       console.error(error);
     }
@@ -100,9 +106,12 @@ export const GetFolks = (props) => {
         }
       });
       console.log(res);
+      getFollowings();
       getOthers();
       getRequests();
+      getFollowback();
       getPendingRequest();
+      getFollowers();
     } catch (error) {
       console.error(error);
     }
@@ -119,9 +128,35 @@ export const GetFolks = (props) => {
         }
       });
       console.log(res.data);
+      getFollowings();
       getOthers();
       getRequests();
+      getFollowback();
       getPendingRequest();
+      getFollowers();
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  const denieRequest = async (user) => {
+    try {
+      const host = "http://localhost:5500";
+      const toId = user._id;
+      console.log("making request: user._id: ", toId)
+      const res = await axios.post(`${host}/api/folk/denieRequest`, { toId }, {
+        headers: {
+          'auth-token': localStorage.getItem('token'),
+          'toId': toId
+        }
+      });
+      console.log(res.data);
+      getFollowings();
+      getOthers();
+      getRequests();
+      getFollowback();
+      getPendingRequest();
+      getFollowers();
     } catch (error) {
       console.error(error);
     }
@@ -138,7 +173,6 @@ export const GetFolks = (props) => {
 
       console.log("res.data.requestUsers", res.data.requestUsers);
       setRequest(res.data.requestUsers);
-      getFollowersFollowings();
     } catch (error) {
       console.error(error);
     }
@@ -155,10 +189,13 @@ export const GetFolks = (props) => {
         }
       });
       console.log(res.data);
-      getRequests();
-      getFollowersFollowings();
-      getFollowback();
       getFollowings();
+      getOthers();
+      getRequests();
+      getFollowback();
+      getPendingRequest();
+      getFollowers();
+
     } catch (error) {
       console.error(error);
     }
@@ -175,10 +212,12 @@ export const GetFolks = (props) => {
         }
       });
       console.log("unfollow: req.data", res.data);
-      getFollowersFollowings();
-      getOthers();
       getFollowings();
-
+      getOthers();
+      getRequests();
+      getFollowback();
+      getPendingRequest();
+      getFollowers();
     } catch (error) {
       console.error(error);
     }
@@ -195,8 +234,12 @@ export const GetFolks = (props) => {
         }
       });
       console.log(res.data);
-      getFollowersFollowings();
       getFollowings();
+      getOthers();
+      getRequests();
+      getFollowback();
+      getPendingRequest();
+      getFollowers();
     } catch (error) {
       console.error(error);
     }
@@ -212,9 +255,12 @@ export const GetFolks = (props) => {
         }
       });
       console.log(res.data);
-      getFollowback();
+      getFollowings();
+      getOthers();
       getRequests();
-      getFollowersFollowings();
+      getFollowback();
+      getPendingRequest();
+      getFollowers();
     } catch (error) {
       console.error(error);
     }
@@ -238,6 +284,44 @@ export const GetFolks = (props) => {
   return (
     <>
       <div>
+        <h2>Reuests</h2>
+        <ul className="list-group">
+          {requests.length !== 0 ?
+            requests.map((data, index) => (
+              <Requests key={index} data={data} denieRequest={denieRequest} acceptRequest={acceptRequest} />
+            )) : "No requests"
+          }
+        </ul>
+
+        <h2>Pending Request</h2>
+        <ul className="list-group">
+          {pendingRequest.length > 0 ? (
+            pendingRequest.map((data, index) => (
+              <PendingRequest key={index} data={data} cancelRequest={cancelRequest} />
+            ))
+          ) : (
+            "No pending request"
+          )}
+        </ul>
+
+        <h2>Followers</h2>
+        <ul className="list-group">
+          <Followers unFollow={unFollow} followback={followback} makeFollowback={makeFollowback} followerRequested={followerRequested}
+            followersFollowings={followersFollowings} removeFollower={removeFollower} />
+
+        </ul>
+
+        <h2>followings</h2>
+        <ul className="list-group">
+          {followings.length > 0 ?
+            (
+              followings.map((data, index) => (
+                <Followings key={index} data={data} unFollow={unFollow} />
+              ))
+            ) : "No followings"
+          }
+
+        </ul>
 
         <h2>Not Followers & Non Following</h2>
         <ul className="list-group">
@@ -248,50 +332,6 @@ export const GetFolks = (props) => {
             ))
           }
 
-
-        </ul>
-        <h2>Reuests</h2>
-        <ul className="list-group">
-          {requests &&
-            requests.map((data, index) => (
-              <Requests key={index} data={data} acceptRequest={acceptRequest} />
-            ))
-          }
-        </ul>
-        <h2>Pending Request</h2>
-        <ul className="list-group">
-          {pendingRequest &&
-            pendingRequest.map((data, index) => (
-              <PendingRequest key={index} data={data} cancelRequest={cancelRequest}/>
-            ))
-          }
-
-        </ul>
-        <h2>Followbacks</h2>
-        <ul className="list-group">
-          {followback &&
-            followback.map((data, index) => (
-              <Followback key={index} data={data} makeFollowback={makeFollowback} />
-            ))
-          }
-        </ul>
-        <h2>followers & following</h2>
-        <ul className="list-group">
-          {followersFollowings &&
-            followersFollowings.map((data, index) => (
-              <FollowerFollowing key={index} data={data} removeFollower={removeFollower} />
-            ))
-          }
-
-        </ul>
-
-        <h2>followings</h2>
-        <ul className="list-group">
-          {followings &&
-            followings.map((data, index) => (
-              <Followings key={index} data={data} unFollow={unFollow} />
-            ))
-          }
 
         </ul>
       </div>
