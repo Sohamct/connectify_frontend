@@ -9,7 +9,6 @@ import { useState } from 'react';
 import { NewPost } from './component/NewPost';
 import { GetPost } from './component/GetPost';
 import { GetFolks } from './component/GetFolks';
-import { GetOthers } from './component/GetOthers';
 // made by har and soham
 
 function App() {
@@ -28,7 +27,7 @@ const showAlert = (message, key) => {
     <>
       <Router>
           <Navbar/>
-          <Alert alert={alert}/>
+          <Alert alert={alert} element={<Login showAlert={showAlert}/>}/>
           <div className="container">
             <Routes>
               <Route exact path="/" element={<Home/>} />

@@ -41,7 +41,7 @@ export const Followers = (props) => {
                             </div>
                             <div>
                                 <button className="btn btn-danger mx-2" onClick={() => removeFollower(data)}>remove</button>
-                                <button className="btn btn-danger" onClick={() => unFollow(data)}>Unfollow</button>
+                                {/* <button className="btn btn-danger" onClick={() => unFollow(data)}>Unfollow</button> */}
                             </div>
                         </li>
                     ))}

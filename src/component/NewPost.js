@@ -43,6 +43,7 @@ export const NewPost = (props) => {
         props.showAlert("An error occurred", "danger");
       }
     }
+    setPost({title: '', description: '', image: null});
   }
   const onChange = (e) => {
     setPost({ ...post, [e.target.name]: e.target.value })
