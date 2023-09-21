@@ -306,7 +306,7 @@ export const GetFolks = (props) => {
 
         <h2>Followers</h2>
         <ul className="list-group">
-          <Followers unFollow={unFollow} followback={followback} makeFollowback={makeFollowback} followerRequested={followerRequested}
+          <Followers followback={followback} makeFollowback={makeFollowback} followerRequested={followerRequested}
             followersFollowings={followersFollowings} removeFollower={removeFollower} />
 
         </ul>

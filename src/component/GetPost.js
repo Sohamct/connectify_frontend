@@ -1,12 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { LikePost } from './LikePost';
-import { CommentPost } from './CommentPost';
 
 
 export const GetPost = (props) => {
 
-    const [allPost, setAllPost] = useState(null)
+    const [allPost, setAllPost] = useState([])
     useEffect(() => {
         getPost();
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -50,8 +48,8 @@ export const GetPost = (props) => {
                                         <h5 className="card-title">{post.title}</h5>
                                         <p className="card-text">{post.description}</p>
                                         <div className="d-flex justify-content-flex">
-                                            <LikePost />
-                                            <CommentPost />
+                                            {/* <LikePost />
+                                            <CommentPost /> */}
                                         </div>
                                     </div>
                                 </div>
