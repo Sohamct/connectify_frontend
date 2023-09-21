@@ -31,8 +31,8 @@ const showAlert = (message, key) => {
           <div className="container">
             <Routes>
               <Route exact path="/" element={<Home showAlert={showAlert}/>} />
-              <Route exact path="/login" element={<Login showAlert={showAlert}/>}/>
-              <Route exact path="/signup" element={<Signup showAlert={showAlert}/>}/>
+              <Route exact path="/login" element={<Login showAlert={showAlert}/>}></Route>
+              <Route exact path="/signup" element={<Signup showAlert={showAlert}/>}></Route>
               <Route exact path="/newPost" element={<NewPost showAlert={showAlert}/>}/>
               <Route exact path="/myPost" element={<GetPost showAlert={showAlert}/>}/>
               <Route exact path="/Folks" element={<GetFolks showAlert={showAlert}/>}/>

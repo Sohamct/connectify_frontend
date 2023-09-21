@@ -4,7 +4,6 @@ import { Others } from './Others';
 import { Requests } from './Requests';
 import axios from 'axios';
 import { Followers } from './Followers';
-import { Followback } from './Followback';
 import { PendingRequest } from './PendingRequest';
 
 export const GetFolks = (props) => {
