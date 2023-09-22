@@ -1,34 +1,25 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import './style.css';
 
-export function Navbar() {
-
+export function Navbar(props) {
     const navigate = useNavigate();
 
-    const [isLogedin, setIsLogedin] = useState(false);
-
-    useEffect(() => {
-        const info = window.localStorage.getItem("token");
-        if (info) {
-            setIsLogedin(true);
-        }
-        console.log('isLogedin:', isLogedin); 
-        console.log('Token:', info);
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
-
-    const handleLogout = () => {
+    const handleLogout = async () => {
+        // Clear user data and token
+        console.log('Logging out...');
         localStorage.removeItem('token');
-        setIsLogedin(false);
-        navigate('/login');
-    };
+        props.getUser();
+        navigate('/login'); // Redirect to the login page
+    };    
 
     return (
         <nav className="navbar navbar-expand-lg navbar-light bg-light">
             <div className="container-fluid">
                 <Link className="navbar-brand" to="/">
-                    Navbar </Link>
-                
+                    Navbar
+                </Link>
+
                 <button
                     className="navbar-toggler"
                     type="button"
@@ -44,29 +35,28 @@ export function Navbar() {
                     <ul className="navbar-nav me-auto mb-2 mb-lg-0">
                         <li className="nav-item">
                             <Link className="nav-link active" aria-current="page" to="/">
-                                Home </Link>
-                            
+                                Home
+                            </Link>
                         </li>
-                        {localStorage.getItem("token") &&<li className="nav-item">
-                            <Link className="nav-link active" to="/myPost">
-                                My Post </Link>
-                            
-                        </li>}
-                        {localStorage.getItem("token") && <li className="nav-item">
-                            <Link className="nav-link active" to="/newPost">
-                                New Post </Link>
-                            
-                        </li>}
-                        {localStorage.getItem("token") && <li className="nav-item">
-                            <Link className="nav-link active" to="/folks">
-                                Folks </Link>
-                            
-                        </li>}
-                        {/* {localStorage.getItem("token") && <li className="nav-item">
-                            <Link className="nav-link active" to="/others">
-                                Others </Link>
-                            
-                        </li>} */}
+                        {props.userName && (
+                            <>
+                                <li className="nav-item">
+                                    <Link className="nav-link active" to="/myPost">
+                                        My Post
+                                    </Link>
+                                </li>
+                                <li className="nav-item">
+                                    <Link className="nav-link active" to="/newPost">
+                                        New Post
+                                    </Link>
+                                </li>
+                                <li className="nav-item">
+                                    <Link className="nav-link active" to="/folks">
+                                        Folks
+                                    </Link>
+                                </li>
+                            </>
+                        )}
                     </ul>
 
                     <div className="ml-auto d-flex align-items-center">
@@ -82,10 +72,24 @@ export function Navbar() {
                             </button>
                         </form>
 
-                        {!localStorage.getItem("token") ? <form className="d-flex" role="search">
-                            <Link className="btn btn-primary mx-2" to="/login" role="button">Login</Link>
-                            <Link className="btn btn-primary mx-2" to="/signup" role="button">Signup</Link>
-                        </form> : <button className="btn btn-primary" onClick={handleLogout}>Logout</button>}
+                        {!props.userName ? (
+                            <form className="d-flex" role="search">
+                                <Link className="btn btn-primary mx-2" to="/login" role="button">
+                                    Login
+                                </Link>
+                                <Link className="btn btn-primary mx-2" to="/signup" role="button">
+                                    Signup
+                                </Link>
+                            </form>
+                        ) : (
+                            <div className="d-flex align-items-center">
+                                <p className="nav-text mx-2">Logged in as: {props.userName}</p>
+                                <button className="btn btn-primary" onClick={handleLogout}>
+                                    Logout
+                                </button>
+                            </div>
+                        )}
+
                     </div>
                 </div>
             </div>
