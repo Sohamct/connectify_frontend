@@ -3,3 +3,16 @@
     font-weight: bold;
     color: #333; /* Customize the color as needed */
   }
+
+  .username {
+    font-weight: bold; /* Make the username bold */
+    font-size: 18px;   /* Set the font size to your desired value */
+    color: #007BFF;    /* Set the text color to your desired color */
+    margin-bottom: 5px; /* Add some space between usernames */
+    cursor: pointer;
+}
+/* Likers list */
+.likers-list-popup {
+    list-style: none;
+    padding: 0;
+}

@@ -205,7 +205,7 @@ export const AllPost = () => {
     return (
         <div className="container">
             <h1 className="my-4">All Posts</h1>
-            <div className="row">
+            <div className="row border rounded p-3">
                 {allPost && allPost.map((post, index) => (
                     <div key={index} className="col-md-4 mb-4">
                         <div className="card">

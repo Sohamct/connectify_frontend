@@ -121,7 +121,7 @@ const getUser = async () => {
                             </form>
                         ) : (
                             <div className="d-flex align-items-center">
-                                <p className="nav-text mx-2">Logged in as: { userName}</p>
+                                <p className="nav-text mx-4 logged-in-message">Logged in as: { userName}</p>
                                 <button className="btn btn-primary" onClick={handleLogout}>
                                     Logout
                                 </button>
