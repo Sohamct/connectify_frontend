@@ -5,16 +5,8 @@ import './style.css'
 
 export const GetPost = (props) => {
 
-    const [allPost, setAllPost] = useState([])
-    const [likedPostIds, setLikedPostIds] = useState([]);
-    const [disLikedPostIds, setDislikedsPostIds] = useState([]);
-    const [lpId, setLpId] = useState([]);
-    const [followers, setFollowers] = useState([]);
-    const [followings, setFollowings] = useState([]);
-    const [dlpId, setDlpId] = useState([]);
-    const name = useRef(null);
-    
     useEffect(() => {
+
         getPost();
         getLikedPosts();
         getDislikedPosts()
@@ -25,6 +17,17 @@ export const GetPost = (props) => {
         getName();
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
+
+    const [allPost, setAllPost] = useState([])
+    const [likedPostIds, setLikedPostIds] = useState([]);
+    const [disLikedPostIds, setDislikedsPostIds] = useState([]);
+    const [lpId, setLpId] = useState([]);
+    const [followers, setFollowers] = useState([]);
+    const [followings, setFollowings] = useState([]);
+    const [dlpId, setDlpId] = useState([]);
+    const name = useRef(null);
+
+
 
     const getPost = async () => {
         try {

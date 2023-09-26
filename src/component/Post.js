@@ -20,6 +20,8 @@ export const Post = (props) => {
     const followings = props.followings;
     const name = props.name.current;
 
+
+
     const getLikedUsers = async (post) => {
         try {
             const postId = post._id;

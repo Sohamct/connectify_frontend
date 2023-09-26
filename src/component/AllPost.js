@@ -3,6 +3,8 @@ import axios from 'axios';
 import { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faThumbsUp, faThumbsDown } from '@fortawesome/free-solid-svg-icons';
+import { useGlobalContext } from './GlobalState';
+import { Search } from './Search';
 
 export const AllPost = () => {
     const [allPost, setAllPost] = useState([]);
@@ -11,8 +13,10 @@ export const AllPost = () => {
     const [lpId, setLpId] = useState([]);
     const [dlpId, setDlpId] = useState([]);
     const [postToUserName, setPostToUserName] = useState([]);
+    const [filteredPost, setFilteredPost] = useState([]);
+    const { searchQuery, updateSearchQuery } = useGlobalContext();
 
-    const fetchAllPost = async () => {
+    const fetchAllPost= async () =>  {
         try {
             const host = 'http://localhost:5500';
             const res = await axios.get(`${host}/api/post/fetchAllPosts`, {
@@ -181,15 +185,35 @@ export const AllPost = () => {
             console.error(error);
         }
     };
-
+    const handleSearch = (query) => {
+        
+        updateSearchQuery(query);
+    };
     useEffect(() => {
-        fetchAllPost();
-        getLikedPosts();
-        getDislikedPosts()
-        countLikedPost();
-        countDislikedPost();
-        fetchOwner();
-    }, []);
+        
+        function fetchData() {
+             fetchAllPost();
+             getLikedPosts();
+             getDislikedPosts();
+             countLikedPost();
+             countDislikedPost();
+             fetchOwner();
+            // console.log(se)
+            
+            const filteredPosts = allPost.filter((post) =>
+                post.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                post.description.toLowerCase().includes(searchQuery.toLowerCase())
+            );
+    
+            // Update the filteredPost state with the filtered result
+            setFilteredPost(filteredPosts);
+        }
+    
+        // Call the fetchData function when the component mounts
+        fetchData();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [searchQuery]);
+
     function formatDate(date) {
         if (!(date instanceof Date) || isNaN(date.getTime())) {
             date = new Date(date);
@@ -202,11 +226,15 @@ export const AllPost = () => {
         const year = date.getFullYear();
         return `${day}/${month}/${year} ${hours}:${minutes} ${amOrPm}`;
     }
+
+    
     return (
         <div className="container">
             <h1 className="my-4">All Posts</h1>
             <div className="row border rounded p-3">
-                {allPost && allPost.map((post, index) => (
+            <Search onSearch={handleSearch}></Search>
+            <br></br>
+                {filteredPost && filteredPost.map((post, index) => (
                     <div key={index} className="col-md-4 mb-4">
                         <div className="card">
                             <img

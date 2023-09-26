@@ -9,13 +9,13 @@ import { useState } from 'react';
 import { NewPost } from './component/NewPost';
 import { GetPost } from './component/GetPost';
 import { GetFolks } from './component/GetFolks';
+import {GlobalProvider} from './component/GlobalState';
 
 // made by har and soham
 
 function App() {
   const [alert, setAlert] = useState();
   
-
 const showAlert = (message, key) => {
   setAlert({msg : message, type : key})
 
@@ -25,7 +25,7 @@ const showAlert = (message, key) => {
 }
 
   return (
-    <>
+    <GlobalProvider>
       <Router>
           <Navbar/>
           <Alert alert={alert} element={<Login showAlert={showAlert}/>}/>
@@ -37,12 +37,11 @@ const showAlert = (message, key) => {
               <Route exact path="/newPost" element={<NewPost showAlert={showAlert}/>}/>
               <Route exact path="/myPost" element={<GetPost showAlert={showAlert}/>}/>
               <Route exact path="/Folks" element={<GetFolks showAlert={showAlert}/>}/>
-              {/* <Route exact path="/others" element={<GetOthers showAlert={showAlert}/>}/> */}
               
             </Routes>
           </div>
         </Router>
-    </>
+    </GlobalProvider>
   );
 }
 

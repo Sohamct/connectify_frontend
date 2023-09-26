@@ -6,7 +6,7 @@ import axios from 'axios';
 
 export function Navbar(props) {
     const navigate = useNavigate();
-    const [userName, setUserName] = useState(null);
+    const [userName, setUserName] = useState(' ');
 
     const handleLogout = async () => {
         // Clear user data and token
@@ -98,17 +98,7 @@ const getUser = async () => {
                     </ul>
 
                     <div className="ml-auto d-flex align-items-center">
-                        <form className="d-flex mr-2">
-                            <input
-                                className="form-control me-2"
-                                type="search"
-                                placeholder="Search"
-                                aria-label="Search"
-                            />
-                            <button className="btn btn-outline-success" type="submit">
-                                Search
-                            </button>
-                        </form>
+                        
 
                         {! userName ? (
                             <form className="d-flex" role="search">
