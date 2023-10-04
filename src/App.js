@@ -10,6 +10,7 @@ import { NewPost } from './component/NewPost';
 import { GetPost } from './component/GetPost';
 import { GetFolks } from './component/GetFolks';
 import {GlobalProvider} from './component/GlobalState';
+import { ProfilePage } from './component/ProfilePage';
 
 // made by har and soham
 
@@ -37,6 +38,7 @@ const showAlert = (message, key) => {
               <Route exact path="/newPost" element={<NewPost showAlert={showAlert}/>}/>
               <Route exact path="/myPost" element={<GetPost showAlert={showAlert}/>}/>
               <Route exact path="/Folks" element={<GetFolks showAlert={showAlert}/>}/>
+              <Route exact path="/myProfile" element={<ProfilePage showAlert={showAlert}/>}/>
               
             </Routes>
           </div>

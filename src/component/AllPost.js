@@ -6,8 +6,7 @@ import { faThumbsUp, faThumbsDown } from '@fortawesome/free-solid-svg-icons';
 import { useGlobalContext } from './GlobalState';
 import { Search } from './Search';
 
-export const AllPost = () => {
-    const [allPost, setAllPost] = useState([]);
+export const AllPost = () => {    const [allPost, setAllPost] = useState([]);
     const [likedPostIds, setLikedPostIds] = useState([]);
     const [disLikedPostIds, setDislikedsPostIds] = useState([]);
     const [lpId, setLpId] = useState([]);
@@ -15,8 +14,12 @@ export const AllPost = () => {
     const [postToUserName, setPostToUserName] = useState([]);
     const [filteredPost, setFilteredPost] = useState([]);
     const { searchQuery, updateSearchQuery } = useGlobalContext();
+    // eslint-disable-next-line
+    const [searchButtonContent, setSearchButtonContent] = useState('');
+    // eslint-disable-next-line
+    // const = useRef();
 
-    const fetchAllPost= async () =>  {
+    const fetchAllPost = async () => {
         try {
             const host = 'http://localhost:5500';
             const res = await axios.get(`${host}/api/post/fetchAllPosts`, {
@@ -186,33 +189,70 @@ export const AllPost = () => {
         }
     };
     const handleSearch = (query) => {
-        
+
         updateSearchQuery(query);
+        setDebouncedSearchQuery(query);
+        setDebouncedButtonContent(query)
     };
     useEffect(() => {
-        
-        function fetchData() {
-             fetchAllPost();
-             getLikedPosts();
-             getDislikedPosts();
-             countLikedPost();
-             countDislikedPost();
-             fetchOwner();
-            // console.log(se)
-            
-            const filteredPosts = allPost.filter((post) =>
-                post.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                post.description.toLowerCase().includes(searchQuery.toLowerCase())
-            );
-    
-            // Update the filteredPost state with the filtered result
-            setFilteredPost(filteredPosts);
+        async function fetchData() {
+            await fetchAllPost();
+            await getLikedPosts();
+            await getDislikedPosts();
+            await countLikedPost();
+            await countDislikedPost();
+            await fetchOwner();
+            // console.log(allPost);
+
+            // console.log(allPost.length);
         }
-    
-        // Call the fetchData function when the component mounts
+
         fetchData();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [searchQuery]);
+        // eslint-disable-next-line
+    }, []);
+
+    const [debouncedSearchQuery, setDebouncedSearchQuery] = useState(searchQuery);
+    const [debouncedButtonContent, setDebouncedButtonContent] = useState(searchButtonContent);
+
+    useEffect(() => {
+        // Create a timer to delay the execution of filtering logic
+        const delayTimer = setTimeout(() => {
+            // Update debounced state variables with the latest values
+            setDebouncedSearchQuery(searchQuery);
+            setDebouncedButtonContent(searchButtonContent);
+        }, 300); // Adjust the delay time as needed
+
+        // Clear the timer on unmount or when searchQuery/searchButtonContent changes
+        return () => clearTimeout(delayTimer);
+    }, [searchQuery, searchButtonContent]);
+
+
+
+    useEffect(() => {
+        // Filter the posts based on debounced searchQuery and button content
+        const filteredPosts = allPost.filter((post) => {
+            const lowerCaseTitle = post.title.toLowerCase();
+            const lowerCaseDescription = post.description.toLowerCase();
+            const lowerCaseSearchQuery = debouncedSearchQuery.toLowerCase();
+            const lowerCaseSearchButtonContent = debouncedButtonContent.toLowerCase();
+
+            return (
+                lowerCaseTitle.includes(lowerCaseSearchQuery) ||
+                lowerCaseDescription.includes(lowerCaseSearchQuery) ||
+                lowerCaseTitle.includes(lowerCaseSearchButtonContent) ||
+                lowerCaseDescription.includes(lowerCaseSearchButtonContent)
+            );
+        });
+
+        // Update the filteredPost state with the filtered result
+        setFilteredPost(filteredPosts);
+    }, [debouncedSearchQuery, debouncedButtonContent]);
+
+    // ... (rendering and other parts of your component)
+
+
+
+
 
     function formatDate(date) {
         if (!(date instanceof Date) || isNaN(date.getTime())) {
@@ -227,18 +267,18 @@ export const AllPost = () => {
         return `${day}/${month}/${year} ${hours}:${minutes} ${amOrPm}`;
     }
 
-    
+
     return (
         <div className="container">
             <h1 className="my-4">All Posts</h1>
             <div className="row border rounded p-3">
-            <Search onSearch={handleSearch}></Search>
-            <br></br>
+                <Search onSearch={handleSearch}></Search>
+                <br></br>
                 {filteredPost && filteredPost.map((post, index) => (
                     <div key={index} className="col-md-4 mb-4">
                         <div className="card">
                             <img
-                                src={require(`./images/${post.image}`)}
+                                src={require(`./images//${post.image}`)}
                                 className="card-img-top"
                                 alt={post.title}
                             />
@@ -275,7 +315,7 @@ export const AllPost = () => {
         </div>
     );
 
- // install:    npm install --save @fortawesome/react-fontawesome @fortawesome/free-solid-svg-icons
+    // install:    npm install --save @fortawesome/react-fontawesome @fortawesome/free-solid-svg-icons
 
     // return (
     //     <div className="container">

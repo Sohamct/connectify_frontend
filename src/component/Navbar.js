@@ -93,6 +93,11 @@ const getUser = async () => {
                                         Folks
                                     </Link>
                                 </li>
+                                <li className="nav-item">
+                                    <Link className="nav-link active" to="/myProfile">
+                                        Profile
+                                    </Link>
+                                </li>
                             </>
                         )}
                     </ul>

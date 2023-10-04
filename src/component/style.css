@@ -16,3 +16,11 @@
     list-style: none;
     padding: 0;
 }
+
+.custom-card-img {
+  height: 130px;
+  width: 150px;
+  object-fit: cover; /* This ensures the image covers the entire space */
+  border-radius: 10px; /* Optional: Adds rounded corners */
+  border: 2px solid #ccc; /* Optional: Adds a border */
+}

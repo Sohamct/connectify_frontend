@@ -72,7 +72,7 @@ export const Post = (props) => {
                         {allPost.map((post, index) => (
                             <div key={post._id} className="col-md-4 mb-4">
                                 <div className="card">
-                                    <img src={require(`./images/${post.image}`)} className="card-img-top" alt={""} />
+                                    <img src={require(`./images//${post.image}`)} className="card-img-top" alt={""} />
                                     <div className="card-body">
                                         <h5 className="card-title">{post.title}</h5>
                                         <p className="card-text">{post.description}</p>
