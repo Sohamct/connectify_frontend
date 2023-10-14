@@ -58,7 +58,7 @@ export const ProfilePage = (props) => {
     }
     setTimeout(()=>{
       getProfilePath();
-    }, 1500)
+    }, 2000)
     
   }
 

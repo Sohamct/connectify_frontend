@@ -310,7 +310,7 @@ export const GetFolks = (props) => {
 
         </ul>
 
-        <h2>followings</h2>
+        <h2>Followings</h2>
         <ul className="list-group">
           {followings.length > 0 ?
             (

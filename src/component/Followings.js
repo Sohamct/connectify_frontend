@@ -16,7 +16,7 @@ export const Followings= (props) => {
                                 <p style={{ margin: 0 }}>{data.userName}</p>
                             </div>
                     <div>
-                        <button className="btn btn-primary" onClick={() => unFollow(data)}>unFollow</button>
+                        <button className="btn btn-warning" onClick={() => unFollow(data)}>unFollow</button>
                     </div>
                 </li>
                 

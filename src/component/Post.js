@@ -19,8 +19,7 @@ export const Post = (props) => {
     const followers = props.followers;
     const followings = props.followings;
     const name = props.name.current;
-
-
+    const path = props.path;
 
     const getLikedUsers = async (post) => {
         try {
@@ -44,9 +43,16 @@ export const Post = (props) => {
     };
 
     return (
-        <div>
+        <>
             <div className="profile-header">
-            <h1 className="mb-4">{name}</h1>
+                <div className="profile-details d-flex align-items-center">
+                    <div className="profile-picture mr-2">
+                        {!path ? <img style={{ height: '100px', width: '100px' }} src={require(`./images/profile.jpg`)} className="card-img-top" alt={""} /> :
+                            <img style={{ height: '160px', width: '160px' }} className="custom-card-img" src={require(`./images//${path}`)} alt={""} />
+                        }
+                    </div>
+                    <h2 style={{ margin: 0 }}>{name}</h2>
+                </div>
                 <div className="container">
                     <div className="row">
                         <div className="col-md-4 border rounded p-3">
@@ -154,7 +160,14 @@ export const Post = (props) => {
                                                             <div className="modal-body">
                                                                 {likedPostIds ? LikedUsers.map((liker, index) => (
 
-                                                                    <p className="username" key={index}>{liker.userName}</p>
+                                                                    <div className="profile-details d-flex align-items-center">
+                                                                        <div className="profile-picture mr-2">
+                                                                            {!liker.image ? <img style={{ height: '50px', width: '50px' }} src={require(`./images/profile.jpg`)} className="card-img-top" alt={""} /> :
+                                                                                <img style={{ height: '50px', width: '50px' }} className="custom-card-img" src={require(`./images//${liker.image}`)} alt={""} />
+                                                                            }
+                                                                        </div>
+                                                                        <p className="username" key={index}>{liker.userName}</p>
+                                                                    </div>
                                                                 )) : <p>No one has liked this post</p>}
                                                             </div>
                                                             <div className="modal-footer">
@@ -165,7 +178,6 @@ export const Post = (props) => {
                                                     </div>
                                                 </div>
                                             </div>
-
                                         </div>
                                     </div>
                                 </div>
@@ -174,6 +186,6 @@ export const Post = (props) => {
                     </div>
                 </div>
             )}
-        </div>
+        </>
     );
 }

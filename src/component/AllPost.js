@@ -14,7 +14,7 @@ export const AllPost = () => {    const [allPost, setAllPost] = useState([]);
     const [postToUserName, setPostToUserName] = useState([]);
     const [filteredPost, setFilteredPost] = useState([]);
     const { searchQuery, updateSearchQuery } = useGlobalContext();
-    // eslint-disable-next-line
+    
     const [searchButtonContent, setSearchButtonContent] = useState('');
     // eslint-disable-next-line
     // const = useRef();
@@ -246,7 +246,7 @@ export const AllPost = () => {    const [allPost, setAllPost] = useState([]);
 
         // Update the filteredPost state with the filtered result
         setFilteredPost(filteredPosts);
-    }, [debouncedSearchQuery, debouncedButtonContent]);
+    }, [debouncedSearchQuery, debouncedButtonContent, allPost]);
 
     // ... (rendering and other parts of your component)
 
@@ -273,7 +273,7 @@ export const AllPost = () => {    const [allPost, setAllPost] = useState([]);
             <h1 className="my-4">All Posts</h1>
             <div className="row border rounded p-3">
                 <Search onSearch={handleSearch}></Search>
-                <br></br>
+                <br></br><br></br>
                 {filteredPost && filteredPost.map((post, index) => (
                     <div key={index} className="col-md-4 mb-4">
                         <div className="card">

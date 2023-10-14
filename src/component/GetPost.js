@@ -15,6 +15,7 @@ export const GetPost = (props) => {
         countFollowers();
         countFollowings();
         getName();
+        getProfilePath();
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
@@ -25,6 +26,7 @@ export const GetPost = (props) => {
     const [followers, setFollowers] = useState([]);
     const [followings, setFollowings] = useState([]);
     const [dlpId, setDlpId] = useState([]);
+    const [path, setPath] = useState(null);
     const name = useRef(null);
 
 
@@ -47,6 +49,29 @@ export const GetPost = (props) => {
             console.error(error);
         }
     }
+
+    const getProfilePath = async () => {
+        const host = "http://localhost:5500";
+        const token = localStorage.getItem('token');
+        try {
+          const result = await axios.get(
+            `${host}/api/auth/getUser`, {
+              headers: {
+                'auth-token': token
+              }
+            }
+          )
+          if (result.data.status) {
+            setPath(result.data.user.image);
+          } else {
+            props.showAlert('Some error occurred while getting profile', 'danger');
+          }
+        } catch (err) {
+          console.log(err);
+          props.showAlert(err.response.data.error, "danger");
+        }
+        
+      }
     const deletePost = async (post) => {
         const postId = post._id;
         try {
@@ -275,7 +300,7 @@ export const GetPost = (props) => {
             <div className="container mt-4">
                 <Post lpId={lpId} allPost={allPost} remove={remove} dlpId={dlpId} likedPostIds={likedPostIds}
                  disLikedPostIds={disLikedPostIds} makeDislikePost={makeDislikePost} makeLikePost={makeLikePost}
-                 followers={followers} followings={followings} deletePost={deletePost} name={name}/>
+                 followers={followers} followings={followings} deletePost={deletePost} name={name} path={path}/>
             </div>
         </div>
     );
