@@ -322,7 +322,7 @@ export const GetFolks = (props) => {
 
         </ul>
 
-        <h2>Not Followers & Non Following</h2>
+        <h2>Not Followers & Non Followings</h2>
         <ul className="list-group">
 
           {others &&

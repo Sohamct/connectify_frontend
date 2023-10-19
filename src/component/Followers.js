@@ -54,7 +54,7 @@ export const Followers = (props) => {
                                 <p style={{ margin: 0 }}>{data.userName}</p>
                             </div>
                             <div>
-                                <button className="btn btn-danger mx-2" onClick={() => removeFollower(data)}>remove</button>
+                                <button className="btn btn-danger mx-2" onClick={() => removeFollower(data)}>Remove</button>
 
                             </div>
                         </li>
